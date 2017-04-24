@@ -91,7 +91,6 @@ def get_events(service, calendar_id, time_min, from_zone, to_zone):
     if not events:
         print('No upcoming events found.')
     for event in events:
-        print(event['start'].get('dateTime'))
         st = convert_datetime(event['start'].get('dateTime'), from_zone, to_zone)
         et = convert_datetime(event['end'].get('dateTime'), from_zone, to_zone)
         e_id = event['id']
@@ -107,17 +106,9 @@ def convert_datetime(timestamp, from_zone, to_zone):
 
     # THIS SPLITS THIS '2017-11-05T05:00:00-05:00' INTO THIS ['2017-11-05', '05:00:00', '05:00']
     split = re.split('[A-Z]|(?<=)-(?=[0-9]{2}:)', timestamp)
-    # THEN JOIN PARTS 0 AND 1
-
-
-    #temp1 = timestamp.split('T', maxsplit=1)
-    #dte = temp1[0]
-    #temp2 = temp1[1].split('-')
-    #tme = temp2[0]
-    dt = ' '.join((split[0], split[1]))
-    dt2 = datetime.strptime(dt, '%Y-%m-%d %H:%M:%S')
-    dt2 = dt2.replace(tzinfo=from_zone)
-    gmt = dt2.astimezone(to_zone)
+    dt = datetime.strptime(' '.join((split[0], split[1])), '%Y-%m-%d %H:%M:%S')
+    dt = dt.replace(tzinfo=from_zone)
+    gmt = dt.astimezone(to_zone)
     gmt = datetime.strftime(gmt, '%Y-%m-%d %H:%M:%S')
 
     return gmt
