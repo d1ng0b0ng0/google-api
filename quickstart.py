@@ -19,8 +19,6 @@ except ImportError:
 
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/calendar-python-quickstart.json
-# Science
-#https://www.googleapis.com/auth/calendar.readonly
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Google Calendar API Python Quickstart'
@@ -39,8 +37,7 @@ def get_credentials():
     credential_dir = os.path.join(home_dir, '.credentials')
     if not os.path.exists(credential_dir):
         os.makedirs(credential_dir)
-    credential_path = os.path.join(credential_dir,
-                                   'calendar-python-quickstart.json')
+    credential_path = os.path.join(credential_dir, 'calendar-python-quickstart.json')
 
     store = Storage(credential_path)
     credentials = store.get()
@@ -83,8 +80,7 @@ def get_events(service, calendar_id, time_min, from_zone, to_zone):
     print('Getting the upcoming 25 events')
     print('-----------------------')
     eventsResult = service.events().list(
-        calendarId='amaverify@gmail.com', timeMin=time_min, maxResults=25, singleEvents=True,
-        orderBy='startTime').execute()
+        calendarId='amaverify@gmail.com', timeMin=time_min, maxResults=25, singleEvents=True, orderBy='startTime').execute()
     events = eventsResult.get('items', [])
 
     amas = []
